@@ -32,7 +32,7 @@ elif algo_choice == "Agglomerative":
 else:  # HDBSCAN
     min_cluster_size = st.sidebar.slider("Minimum cluster size", 5, 20, 10)
 
-# Generate dataset
+# Generating  dataset
 if dataset_choice == "Blobs":
     X, y = make_blobs(n_samples=700, centers=4, n_features=3, random_state=42)
     features = 3
@@ -49,7 +49,7 @@ scaler_dict = {
 if scale_choice in scaler_dict:
     X = scaler_dict[scale_choice].fit_transform(X)
 
-# Function to compute and display cluster evaluation metrics
+# Function for cluster metrics
 def display_metrics(X, labels, algo_choice):
     if len(set(labels)) > 1:
         metrics = {
@@ -60,7 +60,7 @@ def display_metrics(X, labels, algo_choice):
         for name, value in metrics.items():
             st.write(f"{name}: {value:.4f}")
 
-# Function to plot 2D or 3D scatter
+# Function to plot 2D or 3D scatter plots
 def plot_clusters(X, labels, algo_choice, features):
     plot_df = pd.DataFrame(X, columns=[f"Feature {i+1}" for i in range(X.shape[1])])
     plot_df['cluster'] = labels
@@ -123,7 +123,7 @@ elif algo_choice == "DBSCAN":
     plot_clusters(X, labels, algo_choice, features)
     display_metrics(X, labels, algo_choice)
 
-else:  # HDBSCAN
+else:  
     # HDBSCAN clustering
     clusterer = HDBSCAN(min_cluster_size=min_cluster_size)
     labels = clusterer.fit_predict(X)
