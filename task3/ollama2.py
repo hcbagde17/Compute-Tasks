@@ -4,7 +4,7 @@ import json
 # Set up the base URL for the local Ollama API
 url = "http://localhost:11434/api/chat"
 
-# Define the payload (your input prompt)
+# Define the payload 
 while True:
     prompt = input("Enter your prompt (or type 'q' to quit): ")
     if prompt.lower() == 'q':
