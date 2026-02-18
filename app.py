@@ -51,11 +51,17 @@ if scale_choice != "None":
 
 if algo_choice == "K-Means":
     wcss=[]
+    score=[]
     for i in range(1,11):
         km = KMeans(n_clusters=i)
         km.fit_predict(X)
+        if i > 1:
+            score.append(silhouette_score(X, km.labels_))
+        else:
+            score.append(0)
         wcss.append(km.inertia_)
-
+    max_score_index = score.index(max(score)) + 1
+    st.write(f'Optimal number of clusters based on silhouette score: {max_score_index}')
     fig, ax = plt.subplots()
     ax.plot(range(1, 11), wcss, marker='o', linestyle='--')
     ax.set_title('Elbow Method')
@@ -63,7 +69,7 @@ if algo_choice == "K-Means":
     ax.set_ylabel('WCSS')
     st.pyplot(fig)
 
-    km = KMeans(n_clusters=k)
+    km = KMeans(n_clusters=max_score_index)
     y1 = km.fit_predict(X)
 
     if features == 2:
@@ -95,8 +101,16 @@ elif algo_choice == "Agglomerative":
     ax.set_xlabel('Sample index')
     ax.set_ylabel('Euclidean distance')
     st.pyplot(fig)
+    
+    score=[]
+    for i in range(2,11):
+        cluster = AgglomerativeClustering(n_clusters=i,linkage='ward')
+        cluster.fit(X)
+        score.append(silhouette_score(X, cluster.labels_))
+    max_score_index = score.index(max(score)) + 2
+    st.write(f'Optimal number of clusters based on silhouette score: {max_score_index}')
 
-    cluster = AgglomerativeClustering(n_clusters=ak,linkage='ward')
+    cluster = AgglomerativeClustering(n_clusters=max_score_index,linkage='ward')
     cluster.fit(X)
     y2 = cluster.labels_
 
