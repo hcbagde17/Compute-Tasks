@@ -3,16 +3,7 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
-from tensorflow.python.keras.utils.generic_utils import CustomObjectScope
 
-# # ---- Custom Objects for model loading ----
-# def TrueDivide(x):
-#     """Custom TrueDivide layer for true division operation"""
-#     return tf.truediv(x[0], x[1]) if isinstance(x, (list, tuple)) else x / 255.0
-
-# custom_objects = {'TrueDivide': TrueDivide}
-
-# ---- Class names EXACTLY as assigned by Keras (alphabetical) ----
 CLASS_NAMES = [
     'burger',
     'butter_naan',
